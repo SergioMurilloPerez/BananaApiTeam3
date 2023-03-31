@@ -27,7 +27,7 @@ public class JPAPropietarioRepo implements IPropietarioRepo {
 
     @Override
     @Transactional
-    public Propietario findById(Long id) {
-        return em.find(Propietario.class, id);
+    public Propietario findById(Long pid) {
+        return em.find(Propietario.class, pid);
     }
 }

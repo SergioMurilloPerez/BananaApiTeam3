@@ -18,6 +18,19 @@ public class JPAIReciboRepo implements IReciboRepo {
         Query query = em.createQuery("SELECT e FROM Recibo e");
         return (List<Recibo>) query.getResultList();
     }
+    
+    @Override
+    public List<Recibo> findImpgados() {
+        Query query = em.createQuery("SELECT e FROM Recibo e where e.estado=false");
+        return (List<Recibo>) query.getResultList();
+    }
+    
+    @Override
+    public List<Recibo> findPagados() {
+        Query query = em.createQuery("SELECT e FROM Recibo e where e.estado=true");
+        return (List<Recibo>) query.getResultList();
+    }
+    
 
     @Override
     @Transactional

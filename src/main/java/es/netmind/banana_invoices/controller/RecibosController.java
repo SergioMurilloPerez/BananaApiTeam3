@@ -33,6 +33,19 @@ public class RecibosController {
         return new ResponseEntity<>(recibos, HttpStatus.OK);
     }
     
+    @GetMapping(value = "/impagados", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Recibo>> getImpagadosRecibos() {
+        List<Recibo> recibos = inventarioRepository.findImpagadosRecibos();
+        return new ResponseEntity<>(recibos, HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "/pagados", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Recibo>> getPagadosRecibos() {
+        List<Recibo> recibos = inventarioRepository.findPagadosRecibos();
+        return new ResponseEntity<>(recibos, HttpStatus.OK);
+    }
+    
+    
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Recibo> getRecibo( @PathVariable @ApiParam(name = "id", value = "Product id", example = "1") Long id ) {
      Recibo recibo = inventarioRepository.findReciboById(id);
@@ -77,6 +90,45 @@ public class RecibosController {
     		inventarioRepository.saveRecibo(updRecibo);
     	}
         return new ResponseEntity<>(updRecibo, HttpStatus.OK);
+    }
+    
+    @PutMapping(value = "/{id}/pagar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity pagarRecibo(@PathVariable @ApiParam(name = "id", value = "Product id", example = "1") Long id ) {
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+       // String enc_password = newRecibo.getPassword(); //passwordEncoder.encode(newUser.getPassword());
+    	
+    	Recibo recibo = inventarioRepository.findReciboById(id);
+    	
+    	if (null != recibo) {
+    		recibo.setEstado(true);
+    		inventarioRepository.saveRecibo(recibo);
+    	}
+        return new ResponseEntity<>(recibo, HttpStatus.OK);
+    }
+    
+    @PutMapping(value = "/{id}/impagar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity impagarRecibo(@PathVariable @ApiParam(name = "id", value = "Product id", example = "1") Long id ) {
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+       // String enc_password = newRecibo.getPassword(); //passwordEncoder.encode(newUser.getPassword());
+    	Recibo recibo = inventarioRepository.findReciboById(id);
+    	
+    	if (null != recibo) {
+    		recibo.setEstado(false);
+    		inventarioRepository.saveRecibo(recibo);
+    	}
+        return new ResponseEntity<>(recibo, HttpStatus.OK);
+    }
+    
+    @PutMapping(value = "/{id}/asociar/{pid}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity asociarRecibo(@PathVariable @ApiParam(name = "id", value = "Product id", example = "1") Long id, @PathVariable @ApiParam(name = "pid", value = "Propietario pid", example = "1") Long pid) {
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+       // String enc_password = newRecibo.getPassword(); //passwordEncoder.encode(newUser.getPassword());
+    	Recibo recibo = inventarioRepository.findReciboById(id);
+    	Propietario prop = inventarioRepository.findPropietarioById(pid);
+    	if (null != recibo && null != prop) {
+    		inventarioRepository.asocia(recibo.getId(), prop.getPid());
+    	}
+        return new ResponseEntity<>(recibo, HttpStatus.OK);
     }
     
 

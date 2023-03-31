@@ -40,6 +40,16 @@ public class InventarioImpl implements IInventario {
     public List<Recibo> findAllRecibos() {
         return recibosRepo.findAll();
     }
+    
+    @Override
+    public List<Recibo> findImpagadosRecibos() {
+        return recibosRepo.findImpgados();
+    }
+    
+    @Override
+    public List<Recibo> findPagadosRecibos() {
+        return recibosRepo.findPagados();
+    }
 
     @Override
     @Transactional
@@ -71,6 +81,13 @@ public class InventarioImpl implements IInventario {
         Recibo rec = recibosRepo.findById(id);
         if (rec != null) return rec;
         else throw new NullElementException("Recibo nulo");
+    }
+    
+    @Override
+    public Propietario findPropietarioById(Long pid) throws NullElementException {
+    	Propietario prop = propietariosRepo.findById(pid);
+        if (prop != null) return prop;
+        else throw new NullElementException("Propietario nulo");
     }
 
     @Override

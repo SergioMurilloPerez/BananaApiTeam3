@@ -7,6 +7,10 @@ import java.util.List;
 public interface IReciboRepo {
     public List<Recibo> findAll();
 
+    public List<Recibo> findImpgados();
+    
+    public List<Recibo> findPagados();
+    
     public Recibo save(Recibo recibo);
 
     Recibo findById(Long id);

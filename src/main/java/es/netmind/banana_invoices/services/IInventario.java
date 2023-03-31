@@ -16,10 +16,16 @@ public interface IInventario {
     public Propietario savePropietario(Propietario prop)throws NullElementException;
 
     public List<Recibo> findAllRecibos();
+    
+    public List<Recibo> findImpagadosRecibos();
 
+    public List<Recibo> findPagadosRecibos();
+    
     public Recibo saveRecibo(Recibo rec)throws NullElementException;
     
     public Recibo findReciboById(Long id)throws NullElementException;
+    
+    public Propietario findPropietarioById(Long pid)throws NullElementException;
 
     public Recibo asocia(Long recId, Long propId)throws NullElementException;
 
