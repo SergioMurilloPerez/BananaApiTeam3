@@ -7,6 +7,9 @@ import es.netmind.banana_invoices.models.Recibo;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public interface IInventario {
     public List<Propietario> findAllPropietarios();
 
@@ -15,6 +18,8 @@ public interface IInventario {
     public List<Recibo> findAllRecibos();
 
     public Recibo saveRecibo(Recibo rec)throws NullElementException;
+    
+    public Recibo findReciboById(Long id)throws NullElementException;
 
     public Recibo asocia(Long recId, Long propId)throws NullElementException;
 

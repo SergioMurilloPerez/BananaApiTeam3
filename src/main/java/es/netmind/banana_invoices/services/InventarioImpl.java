@@ -8,11 +8,13 @@ import es.netmind.banana_invoices.persistence.IReciboRepo;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.cache.support.NullValue;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 
 public class InventarioImpl implements IInventario {
     @Getter
@@ -61,6 +63,13 @@ public class InventarioImpl implements IInventario {
     public Set<String> esValidoRecibo(Long id)throws NullElementException {
         Recibo rec = recibosRepo.findById(id);
         if (rec != null) return rec.esValido();
+        else throw new NullElementException("Recibo nulo");
+    }
+    
+    @Override
+    public Recibo findReciboById(Long id)throws NullElementException {
+        Recibo rec = recibosRepo.findById(id);
+        if (rec != null) return rec;
         else throw new NullElementException("Recibo nulo");
     }
 

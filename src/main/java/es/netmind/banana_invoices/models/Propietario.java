@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 @Getter @Setter
@@ -28,5 +32,6 @@ public class Propietario {
     private int seccion;
 
     @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Recibo> recibos;
 }
